@@ -31,3 +31,6 @@ def emitir_deposito(cliente_id, monto):
 
 if __name__ == "__main__":
     emitir_deposito("CL123", 15000)
+    emitir_deposito("CL132",1000)
+    emitir_deposito("CL425",200000)
+    emitir_deposito("CL564",5763)
