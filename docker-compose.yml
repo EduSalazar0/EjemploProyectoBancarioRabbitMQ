@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # Puerto para aplicaciones (pika, etc.)
+      - "15672:15672"   # Interfaz de administración
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: >
+        -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
+
+  productor-depositos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m producer.servicios.depositar
+
+  productor-retiros:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m producer.servicios.retirar
+
+  productor-transferencias:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m producer.servicios.transferir
+
+  consumer-logs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m consumer.logs.registrar
+
+  consumer-fraudes:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m consumer.fraudes.monitor
+
+  consumer-auditoria:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m consumer.auditoria.registrar
+
+  consumer-notificaciones:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m consumer.notificaciones.enviar
+
+  consumer-validacion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    command: python -m consumer.validacion.verificar
+
+volumes:
+  rabbitmq_data:
