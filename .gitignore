@@ -1,0 +1,53 @@
+# Evita subir configuraciones sensibles
+config/connection.py
+config/azure_config.py
+
+# Opcional: ignora un archivo general de credenciales (si decides centralizar)
+.env
+*.env
+*.secrets
+
+# Archivos de Docker que pueden contener configuraciones internas
+docker-compose.override.yml
+**/Dockerfile.local
+
+# Archivos de compilación y temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Directorios ocultos y de configuración de entorno
+*.env.*
+.envrc
+.venv/
+venv/
+.env/
+
+# Evita subir imágenes o dumps innecesarios
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.gif
+*.svg
+*.zip
+*.tar
+*.gz
+
+# Ignora backups de VSCode u otros editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Evita archivos temporales de sistema
+.DS_Store
+Thumbs.db
+
+# Evita subir bases de datos locales de prueba
+*.sqlite
+*.db
+
+# Ignorar configuraciones de pruebas
+test_*.py

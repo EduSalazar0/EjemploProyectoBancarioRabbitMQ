@@ -17,3 +17,39 @@ Este proyecto simula un sistema bancario distribuido utilizando RabbitMQ como ge
 - `consumer/logs/`: Registro de transacciones
 - `consumer/fraudes/`: Revisión de fraudes
 - `utils/`: Módulos de soporte (logging, etc.)
+# 💰 Proyecto: Sistema Bancario Distribuido con RabbitMQ
+
+---
+
+## 📌 Descripción General
+
+Este proyecto representa la simulación de un **sistema bancario distribuido**, en el que los distintos componentes de la arquitectura interactúan mediante una solución de **mensajería asíncrona basada en RabbitMQ**. El objetivo es gestionar transacciones bancarias y procesos críticos como auditoría, validación de usuarios y detección de fraudes, todo ello desacoplado y bajo una lógica de microservicios.
+
+El sistema está diseñado con principios de **alta disponibilidad, escalabilidad y trazabilidad**, empleando colas de mensajes y exchanges específicos para enrutar eventos financieros de forma confiable.
+
+---
+
+## 🧩 Componentes Clave
+
+- 🔁 **Exchange `dev.direct`:** Encargado de enrutar eventos directos como:
+  - `transaccion.depositar`
+  - `transaccion.retirar`
+  - `transaccion.transferir`
+
+- 🧠 **Exchange `dev.topic`:** Diseñado para patrones flexibles, tales como:
+  - `fraude.*` → eventos de seguridad
+  - `validacion.*` → eventos de control de identidad
+
+- 📦 **Colas configuradas:**
+  - `logs.transacciones`
+  - `seguridad.fraudes`
+  - `notificaciones`
+  - `auditoria.transacciones`
+  - `validacion.usuario`
+
+Estas colas reciben los mensajes según las reglas de ruteo definidas en el archivo `definitions.json`.
+
+---
+
+## 🏗️ Estructura del Proyecto
+

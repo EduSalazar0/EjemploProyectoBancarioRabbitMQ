@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  azure-producer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azure_producer
+    command: python -m azure_bus.producer.send_transaccion
+
+  azure-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: azure_consumer
+    command: python -m azure_bus.consumer.receive_transaccion
